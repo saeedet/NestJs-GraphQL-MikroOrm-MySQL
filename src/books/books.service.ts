@@ -1,4 +1,4 @@
-import { MikroORM } from '@mikro-orm/core';
+import { MikroORM, wrap } from '@mikro-orm/core';
 import { EntityManager, EntityRepository } from '@mikro-orm/mysql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Inject, Injectable } from '@nestjs/common';
@@ -28,11 +28,17 @@ export class BooksService {
     return await this.booksRepository.findOneOrFail({ id: id });
   }
 
-  // update(id: number, updateBookInput: UpdateBookInput) {
-  //   return `This action updates a #${id} book`;
-  // }
+  async updateBook(id: number, updateInput: UpdateBookInput): Promise<Book> {
+    const thisBook = await this.booksRepository.findOne({ id: id });
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} book`;
-  // }
+    wrap(thisBook).assign(updateInput);
+    await this.booksRepository.persistAndFlush(thisBook);
+    return thisBook;
+  }
+
+  async removeBook(id: number): Promise<Book> {
+    const thisBook = await this.booksRepository.findOne({ id: id });
+    await this.booksRepository.removeAndFlush(thisBook);
+    return thisBook;
+  }
 }

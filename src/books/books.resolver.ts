@@ -24,13 +24,16 @@ export class BooksResolver {
     return this.booksService.findOne(id);
   }
 
-  // @Mutation(() => Book)
-  // updateBook(@Args('updateBookInput') updateBookInput: UpdateBookInput) {
-  //   return this.booksService.update(updateBookInput.id, updateBookInput);
-  // }
+  @Mutation(() => BookType)
+  updateBook(
+    @Args('id') id: number,
+    @Args('updateInput') updateInput: UpdateBookInput,
+  ): Promise<Book> {
+    return this.booksService.updateBook(id, updateInput);
+  }
 
-  // @Mutation(() => Book)
-  // removeBook(@Args('id', { type: () => Int }) id: number) {
-  //   return this.booksService.remove(id);
-  // }
+  @Mutation(() => BookType)
+  removeBook(@Args('id') id: number): Promise<Book> {
+    return this.booksService.removeBook(id);
+  }
 }
