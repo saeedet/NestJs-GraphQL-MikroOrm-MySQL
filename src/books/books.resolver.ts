@@ -19,8 +19,8 @@ export class BooksResolver {
     return this.booksService.findAll();
   }
 
-  @Query(() => BookType, { name: 'findBook' })
-  findOne(@Args('id', { type: () => Int }) id: number): Promise<Book | string> {
+  @Query(() => BookType, { name: 'findBook', nullable: true })
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Book | null> {
     return this.booksService.findOne(id);
   }
 
