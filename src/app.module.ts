@@ -1,3 +1,4 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -8,12 +9,14 @@ import { BooksModule } from './books/books.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.local',
+      envFilePath: '.env',
     }),
     GraphQLModule.forRoot({
-      include: [BooksModule],
-      autoSchemaFile: './src/books/graphql/schema.gql',
+      debug: true,
+      playground: true,
+      autoSchemaFile: true,
     }),
+    MikroOrmModule.forRoot(),
     BooksModule,
   ],
   controllers: [AppController],

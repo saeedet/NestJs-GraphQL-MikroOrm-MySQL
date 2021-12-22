@@ -1,7 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
-@ObjectType()
+@Entity({ tableName: 'books' })
 export class Book {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @PrimaryKey()
+  id!: number;
+
+  @Property()
+  title!: string;
 }

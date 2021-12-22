@@ -3,33 +3,34 @@ import { BooksService } from './books.service';
 import { Book } from './entities/book.entity';
 import { CreateBookInput } from './dto/create-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
+import { BookType } from './graphql/book.type';
 
-@Resolver(() => Book)
+@Resolver()
 export class BooksResolver {
   constructor(private readonly booksService: BooksService) {}
 
-  @Mutation(() => Book)
+  @Mutation(() => BookType)
   createBook(@Args('createBookInput') createBookInput: CreateBookInput) {
-    return this.booksService.create(createBookInput);
+    return this.booksService.createBook(createBookInput);
   }
 
-  @Query(() => [Book], { name: 'books' })
-  findAll() {
+  @Query(() => [BookType], { name: 'findAllBooks' })
+  findAll(): Promise<Book[]> {
     return this.booksService.findAll();
   }
 
-  @Query(() => Book, { name: 'book' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => BookType, { name: 'findBook' })
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Book | string> {
     return this.booksService.findOne(id);
   }
 
-  @Mutation(() => Book)
-  updateBook(@Args('updateBookInput') updateBookInput: UpdateBookInput) {
-    return this.booksService.update(updateBookInput.id, updateBookInput);
-  }
+  // @Mutation(() => Book)
+  // updateBook(@Args('updateBookInput') updateBookInput: UpdateBookInput) {
+  //   return this.booksService.update(updateBookInput.id, updateBookInput);
+  // }
 
-  @Mutation(() => Book)
-  removeBook(@Args('id', { type: () => Int }) id: number) {
-    return this.booksService.remove(id);
-  }
+  // @Mutation(() => Book)
+  // removeBook(@Args('id', { type: () => Int }) id: number) {
+  //   return this.booksService.remove(id);
+  // }
 }
