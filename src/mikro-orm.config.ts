@@ -3,11 +3,11 @@ import * as path from 'path';
 
 const config: Options = {
   type: 'mysql',
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT),
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  dbName: process.env.DB_NAME,
+  host: process.env.MIKRO_ORM_HOST,
+  port: parseInt(process.env.MIKRO_ORM_PORT),
+  user: process.env.MIKRO_ORM_USER,
+  password: process.env.MIKRO_ORM_PASSWORD,
+  dbName: process.env.MIKRO_ORM_DB_NAME,
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   migrations: {
