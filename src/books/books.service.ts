@@ -18,7 +18,6 @@ export class BooksService {
   async createBook(createBookInput: CreateBookInput): Promise<Book> {
     const author = new Author(createBookInput.author);
     const newBook = new Book(createBookInput.title, author);
-
     await this.booksRepository.persistAndFlush(newBook);
     return newBook;
   }
